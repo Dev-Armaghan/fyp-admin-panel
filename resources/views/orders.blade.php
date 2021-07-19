@@ -1,5 +1,5 @@
 @extends('dashboard')
 
 @section('content')
-    <h3>hy i am order page</h3>
+    <h3>here all the orders will be received</h3>
 @endsection
