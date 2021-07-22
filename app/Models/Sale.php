@@ -11,10 +11,7 @@ class Sale extends Model
     public $timestamps=false;
 
     public function saleDetail(){
-        return $this->hasMany(SaleDetail::class);
+        return $this->hasOne(Cart::class);
     }
     
-    public function customer(){
-        return $this->belongsTo(User::class);
-    }
 }

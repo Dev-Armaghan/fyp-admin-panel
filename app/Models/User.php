@@ -18,9 +18,6 @@ class User extends Authenticatable
         'remember_token',
     ];
     
-    public function sale(){
-        return $this->hasMany(Sale::class);
-    }
 
     public function cart(){
         return $this->hasMany(Cart::class);

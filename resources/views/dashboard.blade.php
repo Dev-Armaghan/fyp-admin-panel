@@ -111,6 +111,9 @@
                     <li>
                         <a href="editProducts" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Products</a>
                     </li>
+                    <li>
+                        <a href="currentStock" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Current Stock</a>
+                    </li>
                     {{-- <li>
                         <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
                     </li> --}}

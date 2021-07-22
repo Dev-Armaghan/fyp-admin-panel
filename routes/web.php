@@ -34,3 +34,4 @@ Route::post('insertProduct',[ProductController::class,'store'])->name('insert.pr
 Route::get('deleteProduct/{id}',[ProductController::class,'destroy']);
 Route::get('editProduct/{id}',[ProductController::class,'edit']);
 Route::post('updateProduct/{id}',[ProductController::class,'update'])->name('update.product');
+Route::get('currentStock',[ProductController::class,'currentStock']);

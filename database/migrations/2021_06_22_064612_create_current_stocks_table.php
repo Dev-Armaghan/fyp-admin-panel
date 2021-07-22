@@ -14,6 +14,7 @@ class CreateCurrentStocksTable extends Migration
     public function up()
     {
         Schema::create('current_stocks', function (Blueprint $table) {
+            $table->id();
             $table->integer('product_id');
             $table->integer ('qty');
             $table->double('avg_price');

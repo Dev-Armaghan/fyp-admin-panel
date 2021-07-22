@@ -23,10 +23,6 @@ class Product extends Model
     }
 
     // 1:m with sale_details
-    public function saleDetail()
-    {
-        return $this->hasMany(SaleDetail::class);
-    }
 
     // 1:m with the cart_details
      public function cartDetail(){

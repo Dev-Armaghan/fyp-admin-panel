@@ -8,6 +8,7 @@ use App\Models\Vendor;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\Product;
+use App\Models\CurrentStock;
 
 class ProductController extends Controller
 {
@@ -40,6 +41,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //initializing models 
+       $currentStock=new CurrentStock;
         $Product=new Product;
         $vendor=new Vendor;
         $purchase=new Purchase;
@@ -104,13 +106,42 @@ class ProductController extends Controller
                     $purchaseDetail->batch_no=$request->batchNo;
                     $purchaseDetail->save();
                     
+                    $request->session()->flash('msg','data inserted');
         }
             else 
             {
-            dd($detail);
+                $request->session()->flash('msg','data present already');
+                return redirect('addProducts');
             }
-        $request->session()->flash('msg','data inserted');
-        return redirect('addProducts');
+
+            //calculating the qty of total medicine in inventory
+            $prodId=Product::where('product_name',$request->productName)->pluck('id')->first();
+            $getQuantity=PurchaseDetail::where('product_id',Product::where('product_name',$request->productName)->pluck('id')->first())
+            ->sum('qty');
+            $avgPrice=PurchaseDetail::where('product_id',Product::where('product_name',$request->productName)->pluck('id')->first())
+            ->avg('unit_price');
+            
+
+            $checkInCurrent=CurrentStock::where('product_id',$prodId);
+
+
+            if($checkProduct){
+                CurrentStock::where('product_id',Product::where('product_name',$request->productName)->pluck('id')->first())
+                 ->update(
+                    [
+                        'qty'=>$getQuantity,
+                        'avg_price'=>$avgPrice
+                    ]
+                 );
+            }
+            else {
+                $currentStock->product_id=$prodId;
+                $currentStock->qty=$getQuantity;
+                $currentStock->avg_price=$avgPrice;
+            }
+
+            return redirect('addProducts');
+
      } 
 
     /**
@@ -225,5 +256,9 @@ class ProductController extends Controller
         DB::delete('delete from purchase_details where product_id = ?',[$id]);
         Purchase::Destroy($purchaseId);
         return \redirect('editProducts');
+    }
+
+    public function currentStock(){
+        
     }
 }
