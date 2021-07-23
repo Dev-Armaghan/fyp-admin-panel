@@ -121,23 +121,25 @@ class ProductController extends Controller
             $avgPrice=PurchaseDetail::where('product_id',Product::where('product_name',$request->productName)->pluck('id')->first())
             ->avg('unit_price');
             
+            $checkInCurrent=CurrentStock::where('product_id',$prodId)->get();
 
-            $checkInCurrent=CurrentStock::where('product_id',$prodId);
 
-
-            if($checkProduct){
-                CurrentStock::where('product_id',Product::where('product_name',$request->productName)->pluck('id')->first())
+            if($checkInCurrent->isEmpty()){
+                DB::table('current_stocks')
+                ->insert([
+                    'product_id'=>$prodId,
+                    'qty'=>$getQuantity,
+                    'avg_price'=>$avgPrice,
+                ]);
+            }
+            else {
+                CurrentStock::where('product_id',$prodId)
                  ->update(
                     [
                         'qty'=>$getQuantity,
                         'avg_price'=>$avgPrice
                     ]
-                 );
-            }
-            else {
-                $currentStock->product_id=$prodId;
-                $currentStock->qty=$getQuantity;
-                $currentStock->avg_price=$avgPrice;
+                    );
             }
 
             return redirect('addProducts');
@@ -250,8 +252,10 @@ class ProductController extends Controller
     public function destroy(Product $Product,$id)
     {
         //
+        $currentStockId=CurrentStock::where('product_id',$id);
         $purchaseId=PurchaseDetail::where('product_id',$id)->pluck('purchase_id');
         Product::destroy($id);
+        CurrentStock::destroy($currentStockId );
         // PurchaseDetail::Destroy()->where('product_id',$id);
         DB::delete('delete from purchase_details where product_id = ?',[$id]);
         Purchase::Destroy($purchaseId);
@@ -259,6 +263,24 @@ class ProductController extends Controller
     }
 
     public function currentStock(){
+
         
+        $current=DB::table('current_stocks')
+        ->join('products','current_stocks.product_id','=','products.id')
+        ->select('product_name','qty','avg_price')->get();
+
+        return view('currentStock',['collection'=>$current]);
+
+
+        
+    }
+    public function search(Request $req){
+
+        $product=DB::table('products')
+        ->where('product_name','like','%'.$req->search.'%')
+       ->join('current_stocks','products.id','=','current_stocks.product_id')
+       ->select('product_name','qty','avg_price')->get();
+       return view('searchedProduct',['collection'=>$product]);
+
     }
 }
