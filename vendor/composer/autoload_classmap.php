@@ -28,7 +28,6 @@ return array(
     'App\\Models\\Purchase' => $baseDir . '/app/Models/Purchase.php',
     'App\\Models\\PurchaseDetail' => $baseDir . '/app/Models/PurchaseDetail.php',
     'App\\Models\\Sale' => $baseDir . '/app/Models/Sale.php',
-    'App\\Models\\SaleDetail' => $baseDir . '/app/Models/SaleDetail.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\Vendor' => $baseDir . '/app/Models/Vendor.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
