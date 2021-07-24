@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('registerUser','AuthController@register');
 Route::post('loginUser','AuthController@login');
 Route::post('search','AuthController@search');
+Route::post('forgot','AuthController@forgot');
