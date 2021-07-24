@@ -18,7 +18,7 @@ class CreateCartDetailsTable extends Migration
             $table->integer('product_id');
             $table->integer('qty');
             $table->date('date_added');
-            $table->double('price');
+            $table->double('sale_unit_price');
             $table->foreign('cart_id')->references('id')->on('carts');
             $table->foreign('product_id')->references('id')->on('product');
 });

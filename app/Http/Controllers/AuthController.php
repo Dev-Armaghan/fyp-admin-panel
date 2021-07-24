@@ -94,12 +94,6 @@ class AuthController extends Controller
     }
     public function search(Request $request){
         if ($request->search){
-            // $search = $request->input('search');
-            // $products = Product::where('category', 'product_name', 'unit_price', 'vendor_name', 'img','qty')
-            //     ->whereHas('category', function ($query) use ($search){
-            //     $query->where('category', 'like', '%'.$search.'%');
-            // })->get();
-            // //->orWhere('product_name', 'like', '%'.$search.'%')
             $search=$request->search;
             $products=Product::where('product_name','like','%'.$search.'%')
             ->join('purchase_details','products.id','=','purchase_details.product_id')
