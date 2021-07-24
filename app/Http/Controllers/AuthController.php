@@ -113,7 +113,7 @@ class AuthController extends Controller
             ]);
         }
     }
-    public function forgot(ForgotRequest $request){
+    public function forgot(Request $request){
         $email = $request->input('email');
         if(User::where('email', $email)->doesntExist()){
             return response([
