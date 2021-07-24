@@ -150,4 +150,56 @@ class AuthController extends Controller
             ], 400);
         }
     }
+    public function reset(Request $request){
+        $validator = Validator::make($request->all(),[
+            'token' => 'required',
+            'password' => 'required|min:8',
+            'password_confirm' => 'required|same:password'
+        ]);
+
+        if($validator->fails()){
+            $message = $validator->errors();
+            return collect([
+                'status' => false,
+                'message' =>$message->first()
+            ]);
+        }
+        /** @var User $user */
+        $token = $request->input('token');
+        if(!$passwordResets = DB::table('password_resets')->where('token', $token)->first()){
+            return response([
+                'status' => false,
+                'message' => 'Invalid token!'
+            ], 400);
+        }
+
+        if(!$user = User::where('email', $passwordResets->email)->first()){
+            return response([
+                'status' => false,
+                'message' => 'User doesn\'t exist!'
+            ], 404);
+        }
+
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        return response([
+            'status' => true,
+            'message' => 'Success'
+        ]);
+    }
+    public function checkToken(Request $request){
+        $token = $request->input('token');
+        if(!$passwordResets = DB::table('password_resets')->where('token', $token)->first()){
+            return response([
+                'status' => false,
+                'message' => 'Invalid token!'
+            ], 400);
+        }
+
+        return response([
+            'status' => true,
+            'message' => 'Success'
+        ]);
+    }
+
 }

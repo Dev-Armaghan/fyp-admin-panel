@@ -21,3 +21,5 @@ Route::post('registerUser','AuthController@register');
 Route::post('loginUser','AuthController@login');
 Route::post('search','AuthController@search');
 Route::post('forgot','AuthController@forgot');
+Route::post('checkToken','AuthController@checkToken');
+Route::post('reset','AuthController@reset');
