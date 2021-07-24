@@ -113,4 +113,36 @@ class AuthController extends Controller
             ]);
         }
     }
+    public function forgot(ForgotRequest $request){
+        $email = $request->input('email');
+        if(User::where('email', $email)->doesntExist()){
+            return response([
+                'status' => false,
+                'message' => 'User doen\'t exists'
+            ], 404);
+        }
+        $token = Str::random(6);
+
+        try {
+            DB::table('password_resets')->insert([
+                'email' => $email,
+                'token' => $token
+            ]);
+
+            Mail::send('forgot', ['token' => $token], function (Message $message) use ($email){
+                $message->to($email);
+                $message->subject('Reset your Password');
+            });
+
+            return response([
+                'status' => true,
+                'message' => 'Check your email'
+            ]);
+        }catch (\Exception $exception){
+            return response([
+                'status' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
 }
