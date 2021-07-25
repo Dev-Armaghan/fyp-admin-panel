@@ -12,11 +12,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+      @foreach($collection as $item)
+        <tr>
+        <th scope="row">{{$item->id}}</th>
+        <td>{{$item->sale_date}}</td>
+        <td>{{$item->price}}</td>
+        <td>{{$item->user_id}}</td>
       </tr>
+      @endforeach
+    
     </tbody>
   </table>@endsection

@@ -34,7 +34,6 @@ class AuthController extends Controller
               'message' => $data
             ]);
           }
-          
         try {
             $user = User::create([
                 'user_name' => $request->input('user_name'),
@@ -218,18 +217,18 @@ class AuthController extends Controller
               'message' => $data
             ]);
           }
-          
-        try {
-            $user = User::create([
+        
+               try {
+            $user = User::where('email',$request->email)
+            ->update([
                 'user_address' => $request->input('user_address'),
                 'user_tel' => $request->input('user_tel'),
-            ])->where('email',$request->email);
+            ]);
 
 
             return response([
                 'status' => true,
                 'message' => 'Success',
-                'token' => $token,
                 'user' => $user
             ]);
         }catch (\Exception $exception){
