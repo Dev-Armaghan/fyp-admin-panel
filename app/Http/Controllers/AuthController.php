@@ -201,5 +201,44 @@ class AuthController extends Controller
             'message' => 'Success'
         ]);
     }
+    public function takeAddress(Request $request){
+     
+        $rules = [
+            'email'=>'required|email',
+            'user_address' => 'required',
+            'user_tel' => 'required',
+          ];
+
+          $validator = Validator::make($request->all(), $rules);
+
+          if ($validator->fails()) {
+            $data = $validator->errors()->first();
+            return collect([
+              'status' => false,
+              'message' => $data
+            ]);
+          }
+          
+        try {
+            $user = User::create([
+                'user_address' => $request->input('user_address'),
+                'user_tel' => $request->input('user_tel'),
+            ])->where('email',$request->email);
+
+
+            return response([
+                'status' => true,
+                'message' => 'Success',
+                'token' => $token,
+                'user' => $user
+            ]);
+        }catch (\Exception $exception){
+            return response([
+                'status' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
+
 
 }

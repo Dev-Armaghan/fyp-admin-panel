@@ -15,6 +15,6 @@ class SaleController extends Controller
         $dt = $dt->format('Y-m-d H:i:s');
         return $dt;
         $order=Sale::all()
-        ->where('sale_date',)
+        ->where('sale_date',);
     }
 }

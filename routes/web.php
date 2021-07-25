@@ -26,9 +26,7 @@ Route::get('checkInventory',function(){
 Route::get('orders',function(){
     return view('orders');
 });
-Route::get('totalOrders',function(){
-    return view('totalOrders');
-});
+Route::get('totalOrders',[SaleController::class,'todayOrders']);
 
 Route::post('insertProduct',[ProductController::class,'store'])->name('insert.product');
 Route::get('deleteProduct/{id}',[ProductController::class,'destroy']);
