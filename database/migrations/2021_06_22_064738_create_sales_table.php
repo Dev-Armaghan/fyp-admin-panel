@@ -16,10 +16,9 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->date('sale_date');
-            $table->integer('user_id');
+            $table->integer('cart_id');
             $table->double('total_price');
-            $table->string('address');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('cart_id')->references('id')->on('carts');
 
         });
     }
