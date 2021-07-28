@@ -18,6 +18,7 @@ class CreateSalesTable extends Migration
             $table->date('sale_date');
             $table->integer('cart_id');
             $table->double('total_price');
+            $table->String('status')->default('pending');
             $table->foreign('cart_id')->references('id')->on('carts');
 
         });

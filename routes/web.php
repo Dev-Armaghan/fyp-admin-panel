@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::get('orders',function(){
     return view('orders');
 });
 Route::get('totalOrders',[SaleController::class,'todayOrders']);
+Route::get('orders',[SaleController::class,'newOrders']);
+Route::get('viewUsers',[UserController::class,'viewUsers']);
 
 Route::post('insertProduct',[ProductController::class,'store'])->name('insert.product');
 Route::get('deleteProduct/{id}',[ProductController::class,'destroy']);
@@ -35,3 +38,4 @@ Route::get('editProduct/{id}',[ProductController::class,'edit']);
 Route::post('updateProduct/{id}',[ProductController::class,'update'])->name('update.product');
 Route::get('currentStock',[ProductController::class,'currentStock']);
 Route::get('search',[ProductController::class,'search']);
+Route::get('searchUser',[UserController::class,'search']);

@@ -24,3 +24,4 @@ Route::post('forgot','AuthController@forgot');
 Route::post('checkToken','AuthController@checkToken');
 Route::post('reset','AuthController@reset');
 Route::post('takeAddress','AuthController@takeAddress');
+Route::post('addToCart','AuthController@addToCart');

@@ -238,6 +238,47 @@ class AuthController extends Controller
             ], 400);
         }
     }
+    public function addToCart(Request $request){
+     
+        $rules = [
+            'date_modified' => 'required',
+            'email'=> 'email|required'
+          ];
 
+          $validator = Validator::make($request->all(), $rules);
+
+          if ($validator->fails()) {
+            $data = $validator->errors()->first();
+            return collect([
+              'status' => false,
+              'message' => $data
+            ]);
+          }
+
+          $userId=User::where('email',$request->email)->pluck('id');
+          dd($userId);
+
+        try {
+            $user = Cart::create([
+                'date_modified' => $request->input('date_modified'),
+                'user_id' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ]);
+
+            $token = $user->createToken('app')->accessToken;
+
+            return response([
+                'status' => true,
+                'message' => 'Success',
+                'token' => $token,
+                'user' => $user
+            ]);
+        }catch (\Exception $exception){
+            return response([
+                'status' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
 
 }

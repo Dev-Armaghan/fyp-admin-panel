@@ -252,7 +252,7 @@ class ProductController extends Controller
     public function destroy(Product $Product,$id)
     {
         //
-        $currentStockId=CurrentStock::where('product_id',$id);
+        $currentStockId=CurrentStock::where('product_id',$id)->pluck('id');
         $purchaseId=PurchaseDetail::where('product_id',$id)->pluck('purchase_id');
         Product::destroy($id);
         CurrentStock::destroy($currentStockId );
