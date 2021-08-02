@@ -14,6 +14,6 @@ class CurrentStock extends Model
     // making belongs to relation with Products
 
     public function productStock(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(App\Models\ProductProduct::class);
     }
 }
