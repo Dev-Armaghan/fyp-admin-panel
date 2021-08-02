@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
+    
+    public $timestamps=false;
 
     public function customer(){
         return $this->belongsTo(User::class);
@@ -20,4 +22,6 @@ class Cart extends Model
     public function sale(){
         return $this->belongsTo(Sale::class);
     }
+
+    protected $fillable = ['user_id','date_modified'];
 }

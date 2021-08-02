@@ -19,7 +19,7 @@ class Product extends Model
     // 1:1 with current_stocks
     public function currentStock()
     {
-        return $this->hasOne(\App\Models\CurretStock::class);
+        return $this->hasOne(CurrentStock::class);
     }
 
     // 1:m with sale_details
